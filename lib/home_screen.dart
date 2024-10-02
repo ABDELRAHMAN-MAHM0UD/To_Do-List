@@ -40,13 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Today", style: TextStyle(color: AppColors.sky, fontSize: 38)),
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.list_sharp),
-                  color: AppColors.sky,
-                  iconSize: 48,
-                )
+                Text("Tasks", style: TextStyle(color: AppColors.sky, fontSize: 38)),
               ],
             ),
           ),
