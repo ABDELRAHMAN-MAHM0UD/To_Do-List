@@ -1,4 +1,4 @@
-package com.example.to_do_release
+package com.absoft.to_do
 
 import io.flutter.embedding.android.FlutterActivity
 

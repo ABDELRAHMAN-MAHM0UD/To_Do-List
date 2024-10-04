@@ -1,5 +1,5 @@
 class AdsUtils{
-  static bool inTest = true;
+  static bool inTest = false;
 
   static String banenr1 = inTest?
   "ca-app-pub-3940256099942544/6300978111":
