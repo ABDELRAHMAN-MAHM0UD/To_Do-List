@@ -70,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void AddButtonTap() {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
       builder: (_) => AddTaskBottomSheet(), // No need to pass onTaskAdded
     );
