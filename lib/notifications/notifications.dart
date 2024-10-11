@@ -20,7 +20,7 @@ void startChecking({required DateTime targetDateTime, required TaskWidget task})
           content: NotificationContent(
               id: notificationId1Hour, // Use the calculated ID for the one-hour notification
               channelKey: 'channelKey',
-              title: "Task not done yet",
+              title: "Task Reminder",
               body: "Task: ${task.taskTitle}"));
       timer.cancel(); // Cancel the timer after the action is performed
     }
