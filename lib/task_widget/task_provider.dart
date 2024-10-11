@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-
 import 'package:to_do_list/task_widget/task_widget.dart';
 
 
@@ -23,7 +22,6 @@ class TaskProvider with ChangeNotifier {
           .toList();
     }
     notifyListeners(); // Notify listeners of changes
-    print(">>>>${tasksList.length}");
   }
 
   Future<void> addTask(TaskWidget task) async {

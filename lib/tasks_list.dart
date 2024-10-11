@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_list/task_widget/task_provider.dart';
+import 'package:to_do_list/task_widget/task_widget.dart';
 
 import 'colors.dart';
 
 class TasksList extends StatefulWidget {
+
+  List<TaskWidget> tasks;
+
+  TasksList({required this.tasks});
   @override
   State<TasksList> createState() => _TasksListState();
 }
@@ -14,7 +19,7 @@ class _TasksListState extends State<TasksList> {
   @override
   Widget build(BuildContext context) {
     // Access the tasks from the TaskProvider
-    final tasks = Provider.of<TaskProvider>(context).tasksList;
+   // final tasks = Provider.of<TaskProvider>(context).tasksList;
 
     return ListView.separated(
       itemBuilder: (context, index) {
@@ -33,7 +38,7 @@ class _TasksListState extends State<TasksList> {
               dismissible: DismissiblePane(onDismissed: () {
 
                 Provider.of<TaskProvider>(context, listen: false).deleteTask(
-                    tasks[index]
+                    widget.tasks[index]
                 );
                 setState(() {
                   
@@ -46,7 +51,7 @@ class _TasksListState extends State<TasksList> {
                 SlidableAction(
                   onPressed: (_){
                     Provider.of<TaskProvider>(context, listen: false).deleteTask(
-                      tasks[index]
+                        widget.tasks[index]
                     );
                   },
                   backgroundColor: Color(0xFFFE4A49),
@@ -64,7 +69,7 @@ class _TasksListState extends State<TasksList> {
                 SlidableAction(
                   onPressed: (_){
                     Provider.of<TaskProvider>(context, listen: false).deleteTask(
-                        tasks[index]
+                        widget.tasks[index]
                     );
                   },
                   backgroundColor: Color(0xFFFE4A49),
@@ -75,7 +80,7 @@ class _TasksListState extends State<TasksList> {
               ],
             ),
 
-            child:  tasks[index]
+            child:   widget.tasks[index]
           );
 
 
@@ -86,7 +91,7 @@ class _TasksListState extends State<TasksList> {
         color: AppColors.lightBlue,
         thickness: 1.5,
       ),
-      itemCount: tasks.length,
+      itemCount:  widget.tasks.length,
     );
   }
 }

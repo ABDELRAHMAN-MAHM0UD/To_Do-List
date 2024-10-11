@@ -30,8 +30,8 @@ void startChecking({required DateTime targetDateTime, required TaskWidget task})
           content: NotificationContent(
               id: notificationId1Day, // Use the calculated ID for the one-day notification
               channelKey: 'channelKey',
-              title: "Task not done yet",
-              body: "Task: ${task.taskTitle}"));
+              title: "Task Reminder",
+              body: "don't forget: ${task.taskTitle}"));
       timer.cancel(); // Cancel the timer after the action is performed
     }
     // If the target time has passed, cancel the timer
