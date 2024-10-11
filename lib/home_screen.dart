@@ -1,9 +1,8 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:to_do_release/task_widget/task_provider.dart';
-import 'package:to_do_release/task_widget/task_widget.dart';
-import 'package:to_do_release/task_widget/task_widget_view_model.dart';
-import 'package:to_do_release/tasks_list.dart';
+import 'package:to_do_list/task_widget/task_provider.dart';
+import 'package:to_do_list/tasks_list.dart';
 import 'buttom_sheet.dart';
 import 'colors.dart';
 
@@ -19,6 +18,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     Provider.of<TaskProvider>(context, listen: false).loadTasks(); // Load tasks
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed){
+      if(!isAllowed){
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
   }
 
   @override

@@ -1,8 +1,7 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:to_do_release/task_widget/task_provider.dart';
-import 'package:to_do_release/task_widget/task_widget_view_model.dart';
-import 'package:to_do_release/tasks_list.dart';
+import 'package:to_do_list/task_widget/task_widget_view_model.dart';
 
 class TaskWidget extends StatefulWidget {
   String taskTitle;
@@ -42,7 +41,10 @@ class _TaskWidgetState extends State<TaskWidget> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return InkWell(
-      onTap: ()=> print("<<<<<<<<<<<<<${widget.dateTime}>>>>>>>>>>>>>>"),
+      onTap: (){print("<<<<<<<<<<<<<${widget.dateTime}>>>>>>>>>>>>>>");
+      print(" ><><><>>>  time now is  >> ${DateTime.now()}");
+
+      },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 20),
         height: 60,

@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:to_do_release/ads/ad_unit.dart';
-import 'package:to_do_release/task_widget/task_widget.dart';
-import 'package:to_do_release/view_model.dart';
-import 'package:to_do_release/colors.dart';
 import 'package:provider/provider.dart';
+import 'package:to_do_list/view_model.dart';
+
+import 'ads/ad_unit.dart';
+import 'colors.dart';
 
 class AddTaskBottomSheet extends StatefulWidget {
   @override
@@ -175,8 +175,25 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
       initialDate: DateTime.now(),
       lastDate: DateTime.now().add(Duration(days: 1825)),
     );
-    setState(() {
-      viewModel.dateTime = choosenDate ?? viewModel.dateTime;
-    });
+
+    if (choosenDate != null) {
+      var choosenTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+      );
+
+      if (choosenTime != null) {
+        setState(() {
+          viewModel.dateTime = DateTime(
+            choosenDate.year,
+            choosenDate.month,
+            choosenDate.day,
+            choosenTime.hour,
+            choosenTime.minute,
+          );
+        });
+      }
+    }
   }
+
 }

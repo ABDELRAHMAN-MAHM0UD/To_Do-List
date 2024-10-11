@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:to_do_release/task_widget/task_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:to_do_list/task_widget/task_provider.dart';
 
 import 'colors.dart';
 
-class TasksList extends StatelessWidget {
+class TasksList extends StatefulWidget {
+  @override
+  State<TasksList> createState() => _TasksListState();
+}
+
+class _TasksListState extends State<TasksList> {
   @override
   Widget build(BuildContext context) {
     // Access the tasks from the TaskProvider
@@ -19,6 +24,7 @@ class TasksList extends StatelessWidget {
 
             // The start action pane is the one at the left or the top side.
             startActionPane: ActionPane(
+
               extentRatio: 0.25,
               // A motion is a widget used to control how the pane animates.
               motion:  ScrollMotion(),
@@ -26,6 +32,12 @@ class TasksList extends StatelessWidget {
               // A pane can dismiss the Slidable.
               dismissible: DismissiblePane(onDismissed: () {
 
+                Provider.of<TaskProvider>(context, listen: false).deleteTask(
+                    tasks[index]
+                );
+                setState(() {
+                  
+                });
               }),
 
               // All actions are defined in the children parameter.
