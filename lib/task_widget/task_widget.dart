@@ -11,7 +11,11 @@ class TaskWidget extends StatefulWidget {
   late int id; // Ensure the id is properly initialized
   bool isChecked = false; // Start unchecked by default
 
-  TaskWidget({required this.taskTitle, required this.id,required this.dateTime});
+  TaskWidget(
+      {required this.taskTitle,
+      required this.id,
+      required this.dateTime,
+      this.isChecked = false});
 
   Map<String, dynamic> toJson() {
     return {
@@ -24,12 +28,13 @@ class TaskWidget extends StatefulWidget {
 
   factory TaskWidget.fromJson(Map<String, dynamic> json) {
     return TaskWidget(
-      taskTitle: json['title'],
+        taskTitle: json['title'],
         dateTime: json['dateTime'] != null
-            ? DateTime.parse(json['dateTime']) // Ensure DateTime is parsed correctly
+            ? DateTime.parse(
+                json['dateTime']) // Ensure DateTime is parsed correctly
             : DateTime.now(),
-    id: json['id'] ?? 0,
-    )..isChecked = json['isChecked'] ?? false; // Restore the checked state
+        id: json['id'] ?? 0,
+        isChecked: json['isChecked']); // Restore the checked state
   }
 
   @override
@@ -42,11 +47,11 @@ class _TaskWidgetState extends State<TaskWidget> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    var provider= Provider.of<TaskProvider>(context);
+    var provider = Provider.of<TaskProvider>(context);
     return InkWell(
-      onTap: (){
-      FilteredLists filteredLists=FilteredLists(taskProvider:provider );
-      filteredLists.getTodayTasks();
+      onTap: () {
+        FilteredLists filteredLists = FilteredLists(taskProvider: provider);
+        filteredLists.getTodayTasks();
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 20),
@@ -60,7 +65,8 @@ class _TaskWidgetState extends State<TaskWidget> {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 28,
-                  decoration: widget.isChecked ? TextDecoration.lineThrough : null,
+                  decoration:
+                      widget.isChecked ? TextDecoration.lineThrough : null,
                   decorationColor: Colors.white,
                   decorationThickness: 2.5,
                 ),
@@ -70,6 +76,7 @@ class _TaskWidgetState extends State<TaskWidget> {
               onTap: () {
                 setState(() {
                   widget.isChecked = true; // Mark task as checked
+                  provider.saveTasks();
                 });
               },
               child: Container(
