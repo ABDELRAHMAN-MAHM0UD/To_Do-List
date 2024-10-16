@@ -154,12 +154,6 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                     style: ButtonStyle(),
                   ),
                 ),
-                _isAdLoaded
-                    ? Container(
-                        width: bannerAd!.size.width.toDouble(),
-                        height: bannerAd!.size.height.toDouble(),
-                        child: AdWidget(ad: bannerAd!))
-                    : Container()
               ],
             ),
           ),

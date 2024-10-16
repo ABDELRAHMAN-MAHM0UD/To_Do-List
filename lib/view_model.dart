@@ -19,8 +19,6 @@ class ViewModel {
       TaskWidget task =
           TaskWidget(taskTitle: taskTitle.text, id: taskId, dateTime: dateTime);
 
-      print(" ><><><>>> task date >> ${task.dateTime.day.toString()}");
-      print(" ><><><>>>  date >> ${task.dateTime}");
 
       // Access TaskProvider and add the task
       Provider.of<TaskProvider>(context, listen: false).addTask(task);
