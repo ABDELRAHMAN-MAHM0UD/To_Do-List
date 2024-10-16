@@ -24,64 +24,58 @@ class _TasksListState extends State<TasksList> {
     return ListView.separated(
       itemBuilder: (context, index) {
         return Slidable(
-            // Specify a key if the Slidable is dismissible.
-            key: const ValueKey(0),
+          key: ValueKey(widget.tasks[index].id), // Ensure each Slidable has a unique key
 
-            // The start action pane is the one at the left or the top side.
-            startActionPane: ActionPane(
-
-              extentRatio: 0.25,
-              // A motion is a widget used to control how the pane animates.
-              motion:  ScrollMotion(),
-
-              // A pane can dismiss the Slidable.
-              dismissible: DismissiblePane(onDismissed: () {
-
+          // Start action pane
+          startActionPane: ActionPane(
+            extentRatio: 0.25,
+            motion: ScrollMotion(),
+            dismissible: DismissiblePane(
+              onDismissed: () {
+                // Remove the task via the Provider
                 Provider.of<TaskProvider>(context, listen: false).deleteTask(
-                    widget.tasks[index]
+                  widget.tasks[index],
                 );
-                setState(() {
-                  
-                });
-              }),
-
-              // All actions are defined in the children parameter.
-              children:  [
-                // A SlidableAction can have an icon and/or a label.
-                SlidableAction(
-                  onPressed: (_){
-                    Provider.of<TaskProvider>(context, listen: false).deleteTask(
-                        widget.tasks[index]
-                    );
-                  },
-                  backgroundColor: Color(0xFFFE4A49),
-                  foregroundColor: Colors.white,
-                  icon: Icons.delete,
-                  label: 'Delete',
-                ),
-              ],
+              },
             ),
+            children: [
+              SlidableAction(
+                onPressed: (_) {
+                  Provider.of<TaskProvider>(context, listen: false).deleteTask(
+                    widget.tasks[index],
+                  );
+                },
+                backgroundColor: Color(0xFFFE4A49),
+                foregroundColor: Colors.white,
+                icon: Icons.delete,
+                label: 'Delete',
+              ),
+            ],
+          ),
 
-            endActionPane:  ActionPane(
-              extentRatio: 0.25,
-              motion: ScrollMotion(),
-              children: [
-                SlidableAction(
-                  onPressed: (_){
-                    Provider.of<TaskProvider>(context, listen: false).deleteTask(
-                        widget.tasks[index]
-                    );
-                  },
-                  backgroundColor: Color(0xFFFE4A49),
-                  foregroundColor: Colors.white,
-                  icon: Icons.delete,
-                  label: 'Delete',
-                ),
-              ],
-            ),
+          // End action pane
+          endActionPane: ActionPane(
+            extentRatio: 0.25,
+            motion: ScrollMotion(),
+            children: [
+              SlidableAction(
+                onPressed: (_) {
+                  Provider.of<TaskProvider>(context, listen: false).deleteTask(
+                    widget.tasks[index],
+                  );
+                },
+                backgroundColor: Color(0xFFFE4A49),
+                foregroundColor: Colors.white,
+                icon: Icons.delete,
+                label: 'Delete',
+              ),
+            ],
+          ),
 
-            child:   widget.tasks[index]
-          );
+          // The child widget
+          child: widget.tasks[index], // Ensure this is a widget that can be displayed
+        );
+
 
 
       },
