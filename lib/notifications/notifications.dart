@@ -15,7 +15,8 @@ void startChecking({required DateTime targetDateTime, required TaskWidget task})
     int notificationId1Day = (task.id + 1) % 2147483647; // Use a different calculation for the day notification
 
     // Check if the target time is within the next hour
-    if (difference.inHours == 0 && difference.inMinutes < 60) {
+// Notify one hour before the task's due time
+    if (difference.inMinutes <= 60 && difference.inMinutes > 0) {
       AwesomeNotifications().createNotification(
           content: NotificationContent(
               id: notificationId1Hour, // Use the calculated ID for the one-hour notification
@@ -24,16 +25,17 @@ void startChecking({required DateTime targetDateTime, required TaskWidget task})
               body: "Task: ${task.taskTitle}"));
       timer.cancel(); // Cancel the timer after the action is performed
     }
-    // Check if the target time is within the next day
-    else if (difference.inDays == 0 && difference.inHours < 24) {
+// Notify one day before the task's due time
+    else if (difference.inHours <= 24 && difference.inHours > 1) {
       AwesomeNotifications().createNotification(
           content: NotificationContent(
               id: notificationId1Day, // Use the calculated ID for the one-day notification
               channelKey: 'channelKey',
               title: "Task Reminder",
-              body: "don't forget: ${task.taskTitle}"));
+              body: "Don't forget: ${task.taskTitle}"));
       timer.cancel(); // Cancel the timer after the action is performed
     }
+
     // If the target time has passed, cancel the timer
     else if (difference.isNegative) {
       timer.cancel();

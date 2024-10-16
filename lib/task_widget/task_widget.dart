@@ -47,6 +47,7 @@ class _TaskWidgetState extends State<TaskWidget> {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     var provider = Provider.of<TaskProvider>(context);
     return InkWell(
       onTap: () {
@@ -55,7 +56,7 @@ class _TaskWidgetState extends State<TaskWidget> {
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: 20),
-        height: 60,
+        constraints: BoxConstraints(minHeight: 70),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -70,6 +71,8 @@ class _TaskWidgetState extends State<TaskWidget> {
                   decorationColor: Colors.white,
                   decorationThickness: 2.5,
                 ),
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             GestureDetector(
@@ -86,6 +89,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                   border: Border.all(color: Colors.white, width: 1.7),
                 ),
                 width: width * 0.08,
+                height: height * 0.08,
                 child: widget.isChecked
                     ? Icon(Icons.check, size: 35, color: Colors.white)
                     : null,
