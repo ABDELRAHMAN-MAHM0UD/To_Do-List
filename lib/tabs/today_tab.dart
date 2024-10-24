@@ -2,74 +2,66 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_list/drawer/drawer.dart';
+import 'package:to_do_list/filtered_lists.dart';
 import 'package:to_do_list/task_widget/task_provider.dart';
 import 'package:to_do_list/tasks_list.dart';
-import 'buttom_sheet.dart';
-import 'colors.dart';
 
-class HomeScreen extends StatefulWidget {
-  static const routName = "HomeScreen";
+import '../buttom_sheet.dart';
+import '../colors.dart';
+
+class TodayTab extends StatefulWidget {
+  static const routName = "today_tab";
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<TodayTab> createState() => _TodayTabState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _TodayTabState extends State<TodayTab> {
+  late FilteredLists filteredLists;
+
   @override
-  void initState() {
-    super.initState();
-    Provider.of<TaskProvider>(context, listen: false).loadTasks(); // Load tasks
-    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
-      if (!isAllowed) {
-        AwesomeNotifications().requestPermissionToSendNotifications();
-      }
-    });
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    // Access the provider here
+    var provider = Provider.of<TaskProvider>(context);
+    filteredLists = FilteredLists(taskProvider: provider);
+    filteredLists.getTodayTasks(); // Populate the todayTasks
   }
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-
-    // Access the task list from the provider
-    final taskProvider = Provider.of<TaskProvider>(context);
-    final tasks =
-        taskProvider.tasksList; // Assuming 'tasks' is a List<TaskWidget>
+    final tasks = filteredLists.todayTasks;
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.black,
         leading: Builder(
-          // Use Builder to get the correct context for Scaffold
           builder: (context) => IconButton(
             onPressed: () {
-              // Open the endDrawer (right-side drawer)
               Scaffold.of(context).openDrawer();
             },
             icon: Icon(Icons.list, color: AppColors.sky, size: 45),
           ),
         ),
         title:
-            Text("Tasks", style: TextStyle(color: AppColors.sky, fontSize: 38)),
+            Text("Today", style: TextStyle(color: AppColors.sky, fontSize: 38)),
         toolbarHeight: 110,
-
       ),
-      drawer: Drawer(//width: MediaQuery.of(context).size.width*0.55,
-        child: MyDrawer(),
-      ),
+      drawer: Drawer(child: MyDrawer()),
       backgroundColor: AppColors.black,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(height: height / 70),
-          Expanded(child: TasksList(tasks: tasks,) // Pass the tasks from the provider
-              ),
+          SizedBox(height: MediaQuery.of(context).size.height / 70),
+          Expanded(
+            child: TasksList(tasks: tasks ?? []), // Pass the tasks
+          ),
           Container(
             color: Colors.black38,
-            height: height * .1,
+            height: MediaQuery.of(context).size.height * .1,
             child: InkWell(
-              onTap: () {
-                AddButtonTap();
-              },
+              onTap: AddButtonTap,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -88,10 +80,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void AddButtonTap() {
     showModalBottomSheet(
-      isScrollControlled: true, // This ensures the bottom sheet takes full space
+      isScrollControlled: true,
       context: context,
       builder: (_) => AddTaskBottomSheet(),
     );
   }
-
 }

@@ -1,6 +1,7 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'package:to_do_release/task_widget/task_widget.dart';
+
+import 'package:to_do_list/task_widget/task_widget.dart';
 
 class TaskManager {
   static const String taskListKey = 'taskList';
