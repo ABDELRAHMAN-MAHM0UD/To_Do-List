@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:to_do_list/home_screen.dart';
+import 'package:to_do_list/tabs/calendar.dart';
 
 import '../ads/ad_unit.dart';
 import '../colors.dart';
@@ -111,8 +112,19 @@ class _MyDrawerState extends State<MyDrawer> {
           },
               child: Row(
                 children: [
-                  Icon(Icons.home,color: AppColors.sky,),
+                  Icon(Icons.home,color: Colors.green,),
                   Text(" All Tasks",
+                      style: Theme.of(context).textTheme.bodyLarge),
+                ],
+              )),
+          TextButton(onPressed: (){
+            Navigator.pushNamed(context, Calendar.routName);
+            _showInterstitialAd();
+          },
+              child: Row(
+                children: [
+                  Icon(Icons.calendar_month,color: AppColors.sky,),
+                  Text(" Calendar",
                       style: Theme.of(context).textTheme.bodyLarge),
                 ],
               )),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_list/my_theme.dart';
+import 'package:to_do_list/tabs/calendar.dart';
 import 'package:to_do_list/tabs/today_tab.dart';
 import 'package:to_do_list/task_widget/task_provider.dart';
 import 'home_screen.dart';
@@ -38,7 +39,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         HomeScreen.routName :(_)=> HomeScreen(),
-        TodayTab.routName :(_)=> TodayTab()
+        TodayTab.routName :(_)=> TodayTab(),
+        Calendar.routName :(_)=> Calendar()
       },
       initialRoute: HomeScreen.routName,
       theme: MyTheme.themeData
