@@ -1,10 +1,7 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_list/task_widget/task_provider.dart';
 import 'package:to_do_list/task_widget/task_widget.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-
 import 'notifications/notifications.dart';
 
 class ViewModel {
@@ -12,7 +9,7 @@ class ViewModel {
   TextEditingController taskTitle = TextEditingController();
   DateTime dateTime = DateTime.now();
 
-  void enterTask(BuildContext context) {
+  void enterTask(BuildContext context){
     if (formKey.currentState?.validate() == true) {
       int taskId =
           DateTime.now().millisecondsSinceEpoch; // Generate a unique ID

@@ -14,146 +14,86 @@ class AddTaskBottomSheet extends StatefulWidget {
 
 class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
   final ViewModel viewModel = ViewModel();
-  BannerAd? bannerAd;
-  bool _isAdLoaded = false;
-  InterstitialAd? _interstitialAd;
-  bool _InterstitialAdIsAdLoaded = false;
-
-  void _loadBannerAd() {
-    bannerAd = BannerAd(
-      size: AdSize.banner,
-      adUnitId: AdsUtils.banenr1,
-      listener: BannerAdListener(
-        onAdLoaded: (Ad ad) {
-          setState(() {
-            _isAdLoaded = true;
-          });
-        },
-        onAdFailedToLoad: (Ad ad, LoadAdError error) {
-          ad.dispose();
-          print('Ad failed to load: $error');
-        },
-      ),
-      request: AdRequest(),
-    );
-    bannerAd?.load();
-  }
-
-  void _loadInterstitialAd() {
-    InterstitialAd.load(
-      adUnitId: AdsUtils.interstitialAdUnitId,
-      request: AdRequest(),
-      adLoadCallback: InterstitialAdLoadCallback(
-        onAdLoaded: (ad) {
-          _interstitialAd = ad;
-          _InterstitialAdIsAdLoaded = true;
-        },
-        onAdFailedToLoad: (error) => _InterstitialAdIsAdLoaded = false,
-      ),
-    );
-  }
-
-  void _showInterstitialAd() {
-    if (_isAdLoaded && _interstitialAd != null) _interstitialAd!.show();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _loadBannerAd();
-    _loadInterstitialAd();
-  }
-
-  @override
-  void dispose() {
-    bannerAd?.dispose(); // Dispose the ad to free up resources
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      appBar: AppBar(backgroundColor: AppColors.darkblue),
-      body: Container(
+    return IntrinsicHeight(
+      child: Container(
         color: AppColors.darkblue,
         height: double.infinity,
         width: double.infinity,
         child: Padding(
-          padding: const EdgeInsets.only(top: 20, left: 15),
+          padding: EdgeInsets.only(
+              top: 20,
+              left: 15,
+              bottom: MediaQuery.of(context).viewInsets.bottom),
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "What are you up to?",
-                  style: TextStyle(color: Colors.white, fontSize: 30),
-                ),
-                SizedBox(height: height * 0.02),
                 Form(
                   key: viewModel.formKey,
-                  child: TextFormField(
-                    onChanged: (text) {
-                      viewModel.taskTitle.text = text;
-                    },
-                    validator: (text) {
-                      if (text == null || text.isEmpty) {
-                        return 'Please, enter the task you want to do';
-                      }
-                      return null;
-                    },
-                    controller: viewModel
-                        .taskTitle, // Use the ViewModel's TextEditingController
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                    decoration: InputDecoration(
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                        borderSide: BorderSide(color: AppColors.sky, width: 2),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width*0.55,
+                        child: TextFormField(
+                          onChanged: (text) {
+                            viewModel.taskTitle.text = text;
+                          },
+                          validator: (text) {
+                            if (text == null || text.isEmpty) {
+                              return 'Please, enter the task you want to do';
+                            }
+                            return null;
+                          },
+                          controller: viewModel
+                              .taskTitle, // Use the ViewModel's TextEditingController
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                          decoration: InputDecoration(
+                            hintText: "What are you up to?",
+                          ),
+                        ),
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(30)),
-                        borderSide: BorderSide(color: AppColors.grey, width: 2),
+                      MaterialButton(
+                        onPressed: () {
+                          // Use Provider to add the task
+                          viewModel.enterTask(context);
+                        },
+                        child: Icon(Icons.arrow_upward_rounded),
+                          color: Colors.white,
+                        shape: CircleBorder()
                       ),
-                    ),
+                    ],
                   ),
                 ),
-                SizedBox(height: height * 0.05),
-                Text("When should it be completed?",
-                    style: TextStyle(color: Colors.white, fontSize: 24)),
+                SizedBox(height: height * 0.03),
                 TextButton(
                     onPressed: () {
                       showCalender();
                     },
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text("Open Calender ",
+                        Text("set due date ",
                             style: TextStyle(
                                 color: AppColors.sky,
-                                fontSize: 24,
+                                fontSize: 23,
                                 decoration: TextDecoration.underline,
                                 decorationColor: AppColors.sky)),
-                        Icon(
-                          Icons.calendar_month_outlined,
-                          color: AppColors.sky,
+                        Padding(
+                          padding: const EdgeInsets.only(right: 18),
+                          child: Icon(
+                            Icons.calendar_month_outlined,
+                            color: AppColors.sky,
+                          ),
                         )
                       ],
                     )),
-                Container(
-                  margin: EdgeInsets.only(bottom: 40, top: 50),
-                  width: width * 0.7,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Use Provider to add the task
-                      viewModel.enterTask(context);
-                      _showInterstitialAd();
-                    },
-                    child: Text("Enter"),
-                    style: ButtonStyle(),
-                  ),
-                ),
               ],
             ),
           ),
@@ -189,5 +129,4 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
       }
     }
   }
-
 }
