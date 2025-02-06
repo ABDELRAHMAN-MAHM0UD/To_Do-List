@@ -15,6 +15,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
   @override
   void initState() {
     super.initState();
@@ -37,7 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.black,
         leading: Builder(
           // Use Builder to get the correct context for Scaffold
           builder: (context) => IconButton(
@@ -45,18 +45,18 @@ class _HomeScreenState extends State<HomeScreen> {
               // Open the endDrawer (right-side drawer)
               Scaffold.of(context).openDrawer();
             },
-            icon: Icon(Icons.list, color: AppColors.sky, size: 45),
+            icon: Icon(Icons.list, color: Theme.of(context).iconTheme.color, size: 45),
           ),
         ),
         title:
-            Text("Tasks", style: TextStyle(color: AppColors.sky, fontSize: 38)),
+            Text("Tasks", style: Theme.of(context).textTheme.headlineMedium),
         toolbarHeight: 110,
 
       ),
       drawer: Drawer(//width: MediaQuery.of(context).size.width*0.55,
         child: MyDrawer(),
       ),
-      backgroundColor: AppColors.black,
+
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Expanded(child: TasksList(tasks: tasks,) // Pass the tasks from the provider
               ),
           Container(
-            color: Colors.black38,
+            color: Theme.of(context).colorScheme.surfaceContainer,
             height: height * .1,
             child: InkWell(
               onTap: () {
@@ -74,9 +74,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text("Add new task",
-                      style: TextStyle(color: AppColors.sky, fontSize: 28)),
+                      style:Theme.of(context).textTheme.titleLarge,),
                   Icon(Icons.add_circle_outline_sharp,
-                      color: AppColors.sky, size: 50)
+                      color:Theme.of(context).textTheme.titleLarge!.color, size: 50)
                 ],
               ),
             ),
