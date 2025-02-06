@@ -17,12 +17,11 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
     return IntrinsicHeight(
       child: Container(
-        color: AppColors.darkblue,
+        color: Theme.of(context).colorScheme.onSecondary,
         height: double.infinity,
         width: double.infinity,
         child: Padding(
@@ -40,7 +39,7 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       SizedBox(
-                        width: MediaQuery.of(context).size.width*0.55,
+                        width: MediaQuery.of(context).size.width * 0.55,
                         child: TextFormField(
                           onChanged: (text) {
                             viewModel.taskTitle.text = text;
@@ -53,21 +52,21 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                           },
                           controller: viewModel
                               .taskTitle, // Use the ViewModel's TextEditingController
-                          style: TextStyle(color: Colors.white, fontSize: 20),
+                          style: TextStyle(color: Theme.of(context).textTheme.titleSmall!.color, fontSize: 20),
                           decoration: InputDecoration(
+                            hintStyle: Theme.of(context).textTheme.titleSmall,
                             hintText: "What are you up to?",
                           ),
                         ),
                       ),
                       MaterialButton(
-                        onPressed: () {
-                          // Use Provider to add the task
-                          viewModel.enterTask(context);
-                        },
-                        child: Icon(Icons.arrow_upward_rounded),
-                          color: Colors.white,
-                        shape: CircleBorder()
-                      ),
+                          onPressed: () {
+                            // Use Provider to add the task
+                            viewModel.enterTask(context);
+                          },
+                          child: Icon(Icons.arrow_upward_rounded),
+                          color: Theme.of(context).textTheme.titleMedium!.color,
+                          shape: CircleBorder()),
                     ],
                   ),
                 ),
@@ -80,16 +79,12 @@ class _AddTaskBottomSheetState extends State<AddTaskBottomSheet> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("set due date ",
-                            style: TextStyle(
-                                color: AppColors.sky,
-                                fontSize: 23,
-                                decoration: TextDecoration.underline,
-                                decorationColor: AppColors.sky)),
+                            style: Theme.of(context).textTheme.titleMedium),
                         Padding(
                           padding: const EdgeInsets.only(right: 18),
                           child: Icon(
                             Icons.calendar_month_outlined,
-                            color: AppColors.sky,
+                            color: Theme.of(context).textTheme.titleMedium!.color
                           ),
                         )
                       ],

@@ -32,24 +32,30 @@ class _TodayTabState extends State<TodayTab> {
   @override
   Widget build(BuildContext context) {
     final tasks = filteredLists.todayTasks;
+    double height = MediaQuery.of(context).size.height;
+
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: AppColors.black,
         leading: Builder(
+          // Use Builder to get the correct context for Scaffold
           builder: (context) => IconButton(
             onPressed: () {
+              // Open the endDrawer (right-side drawer)
               Scaffold.of(context).openDrawer();
             },
-            icon: Icon(Icons.list, color: AppColors.sky, size: 45),
+            icon: Icon(Icons.list, color: Theme.of(context).iconTheme.color, size: 45),
           ),
         ),
         title:
-            Text("Today", style: TextStyle(color: AppColors.sky, fontSize: 38)),
+        Text("Today", style: Theme.of(context).textTheme.headlineMedium),
         toolbarHeight: 110,
+
       ),
-      drawer: Drawer(child: MyDrawer()),
-      backgroundColor: AppColors.black,
+      drawer: Drawer(//width: MediaQuery.of(context).size.width*0.55,
+        child: MyDrawer(),
+      ),
+
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -58,17 +64,19 @@ class _TodayTabState extends State<TodayTab> {
             child: TasksList(tasks: tasks ?? []), // Pass the tasks
           ),
           Container(
-            color: Colors.black38,
-            height: MediaQuery.of(context).size.height * .1,
+            color: Theme.of(context).colorScheme.surfaceContainer,
+            height: height * .1,
             child: InkWell(
-              onTap: AddButtonTap,
+              onTap: () {
+                AddButtonTap();
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text("Add new task",
-                      style: TextStyle(color: AppColors.sky, fontSize: 28)),
+                    style:Theme.of(context).textTheme.titleLarge,),
                   Icon(Icons.add_circle_outline_sharp,
-                      color: AppColors.sky, size: 50)
+                      color:Theme.of(context).textTheme.titleLarge!.color, size: 50)
                 ],
               ),
             ),

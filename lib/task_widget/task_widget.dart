@@ -64,11 +64,14 @@ class _TaskWidgetState extends State<TaskWidget> {
               child: Text(
                 widget.taskTitle,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).textTheme.headlineSmall!.color,
                   fontSize: 28,
                   decoration:
                       widget.isChecked ? TextDecoration.lineThrough : null,
-                  decorationColor: Colors.white,
+                  decorationColor: Theme.of(context)
+                      .textTheme
+                      .headlineSmall!
+                      .decorationColor,
                   decorationThickness: 2.5,
                 ),
                 maxLines: 3,
@@ -86,7 +89,8 @@ class _TaskWidgetState extends State<TaskWidget> {
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: widget.isChecked ? Colors.green : Colors.transparent,
-                  border: Border.all(color: Colors.white, width: 1.7),
+                  border: Border.all(
+                      color: Theme.of(context).colorScheme.onSurface, width: 1.7),
                 ),
                 width: width * 0.08,
                 height: height * 0.08,

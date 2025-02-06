@@ -3,7 +3,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_list/task_widget/task_provider.dart';
 import 'package:to_do_list/task_widget/task_widget.dart';
-
 import 'colors.dart';
 
 class TasksList extends StatefulWidget {
@@ -82,7 +81,6 @@ class _TasksListState extends State<TasksList> {
       separatorBuilder: (context, index) => Divider(
         endIndent: 25,
         indent: 25,
-        color: AppColors.lightBlue,
         thickness: 1.5,
       ),
       itemCount:  widget.tasks.length,
